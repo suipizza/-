@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Naver Map Example</title>
+    <meta charset="utf-8">
+    <style>
+      /* 지도 컨테이너의 크기를 화면의 왼쪽 반으로 설정 */
+      #map {
+        width: 60%;
+        height: 100vh; /* 전체 화면 높이를 사용 */
+        float: left; /* 왼쪽에 배치 */
+      }
+      /* 오른쪽 컨테이너 설정 */
+      #info {
+        width: 40%;
+        height: 100vh; /* 전체 화면 높이를 사용 */
+        float: right; /* 오른쪽에 배치 */
+        background-color: #f0f0f0; /* 배경색 설정 */
+        padding: 30px;
+        box-sizing: border-box; /* 패딩 포함 크기 설정 */
+      }
+    </style>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=jpc0f2qdgk"></script>
+    <script>
+      var map;
+      function initMap() {
+        // 지도 초기 위치 설정 (서울 시청)
+        var seoulCityHall = new naver.maps.LatLng(37.5665, 126.9780);
+
+        // 지도 생성
+        map = new naver.maps.Map('map', {
+          center: seoulCityHall,
+          zoom: 15
+        });
+
+        // 마커 생성 함수
+        function addMarker(position, color, title) {
+          var markerOptions = {
+            position: position,
+            map: map,
+            icon: {
+              content: '<div style="color:' + color + ';">●</div>',
+              size: new naver.maps.Size(10, 10),
+              anchor: new naver.maps.Point(5, 5)
+            },
+            title: title
+          };
+          var marker = new naver.maps.Marker(markerOptions);
+
+          // 인포윈도우 생성
+          var infowindow = new naver.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:10px;">' + title + '</div>',
+            borderWidth: 0,
+            disableAnchor: true,
+            backgroundColor: 'transparent',
+            pixelOffset: new naver.maps.Point(0, -10)
+          });
+
+          // 마커에 마우스 오버 이벤트 추가
+          naver.maps.Event.addListener(marker, 'mouseover', function() {
+            infowindow.open(map, marker);
+          });
+
+          // 마커에 마우스 아웃 이벤트 추가
+          naver.maps.Event.addListener(marker, 'mouseout', function() {
+            infowindow.close();
+          });
+        }
+
+        // 대여소 위치 마커 (파란색)
+        addMarker(new naver.maps.LatLng(37.5665, 126.9780), 'blue', '서울 시청');
+        addMarker(new naver.maps.LatLng(37.57419968, 127.0065918), 'blue', '대여소 2');
+
+        // 문화시설 위치 마커 (빨간색)
+        addMarker(new naver.maps.LatLng(37.5796, 126.9770), 'red', '문화시설 1');
+      }
+    </script>
+</head>
+<body onload="initMap()">
+  <div id="map"></div>
+  <div id="info">
+    <h1>정보 창</h1>
+    <p>이곳에 추가적인 정보를 입력할 수 있습니다.</p>
+  </div>
+</body>
+</html>
