@@ -1,86 +1,202 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Naver Map Example</title>
+    <title>Naver Map - {{ region }}</title>
     <meta charset="utf-8">
+    {% load static %}
+
+
     <style>
-      /* 지도 컨테이너의 크기를 화면의 왼쪽 반으로 설정 */
-      #map {
-        width: 60%;
-        height: 100vh; /* 전체 화면 높이를 사용 */
-        float: left; /* 왼쪽에 배치 */
-      }
-      /* 오른쪽 컨테이너 설정 */
-      #info {
-        width: 40%;
-        height: 100vh; /* 전체 화면 높이를 사용 */
-        float: right; /* 오른쪽에 배치 */
-        background-color: #f0f0f0; /* 배경색 설정 */
-        padding: 30px;
-        box-sizing: border-box; /* 패딩 포함 크기 설정 */
-      }
-    </style>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=jpc0f2qdgk"></script>
-    <script>
-      var map;
-      function initMap() {
-        // 지도 초기 위치 설정 (서울 시청)
-        var seoulCityHall = new naver.maps.LatLng(37.5665, 126.9780);
+        /* 지도 컨테이너의 크기를 화면의 왼쪽 반으로 설정 */
+        #map {
+          width: 70%;
+          height: 100vh; /* 전체 화면 높이를 사용 */
+          float: left; /* 왼쪽에 배치 */
+        }
+        /* 오른쪽 컨테이너 설정 */
+        #info {
+          width: 30%;
+          height: 100vh; /* 전체 화면 높이를 사용 */
+          float: right; /* 오른쪽에 배치 */
+          background-color: #AFC8AD; /* 배경색 설정 */
+          padding: 30px;
+          box-sizing: border-box; /* 패딩 포함 크기 설정 */
+        }
+         body {
+          margin: 0; /* 전체 페이지 마진 제거 */
+        }
+          .home-button, .help-button {
+          position: absolute;
+          top: 10px;
+          width: 40px; /* 적절한 크기로 설정 */
+          height: 40px; /* 적절한 크기로 설정 */
+          background-size: contain; /* 이미지 크기를 버튼 크기에 맞춤 */
+          background-repeat: no-repeat;
+          border: none;
+          cursor: pointer;
+        }
+        .home-button {
+          left: 96%; /* info 컨테이너 내에서의 위치 조정 */
 
-        // 지도 생성
-        map = new naver.maps.Map('map', {
-          center: seoulCityHall,
-          zoom: 15
-        });
+          background-image: url('{% static "images/homeb.png" %}');
+        }
+        .help-button {
+          left: 92%; /* info 컨테이너 내에서의 위치 조정 */
+          background-image: url('{% static "images/qmark03.png" %}');
+          background-color: transparent; /* 버튼 배경 투명 */
 
-        // 마커 생성 함수
-        function addMarker(position, color, title) {
-          var markerOptions = {
-            position: position,
-            map: map,
-            icon: {
-              content: '<div style="color:' + color + ';">●</div>',
-              size: new naver.maps.Size(10, 10),
-              anchor: new naver.maps.Point(5, 5)
-            },
-            title: title
-          };
-          var marker = new naver.maps.Marker(markerOptions);
-
-          // 인포윈도우 생성
-          var infowindow = new naver.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:10px;">' + title + '</div>',
-            borderWidth: 0,
-            disableAnchor: true,
-            backgroundColor: 'transparent',
-            pixelOffset: new naver.maps.Point(0, -10)
-          });
-
-          // 마커에 마우스 오버 이벤트 추가
-          naver.maps.Event.addListener(marker, 'mouseover', function() {
-            infowindow.open(map, marker);
-          });
-
-          // 마커에 마우스 아웃 이벤트 추가
-          naver.maps.Event.addListener(marker, 'mouseout', function() {
-            infowindow.close();
-          });
+        }
+        .tooltip {
+          position: absolute;
+          top: 60px;
+          left: 60px;
+          width: 1000px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 5px;
+          padding: 5px;
+          visibility: hidden;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        /* 버튼 기본 스타일 */
+        #filterButton {
+            background-color: #336633; /* 그린 배경색 */
+            border: none; /* 테두리 제거 */
+            color: white; /* 텍스트 색상 */
+            padding: 15px 32px; /* 패딩 */
+            text-align: center; /* 텍스트 중앙 정렬 */
+            text-decoration: none; /* 텍스트 밑줄 제거 */
+            display: inline-block; /* 인라인 블록 */
+            font-size: 16px; /* 글꼴 크기 */
+            margin: 4px 2px; /* 마진 */
+            cursor: pointer; /* 커서 포인터 */
+            border-radius: 12px; /* 둥근 모서리 */
+            transition: background-color 0.3s, transform 0.3s; /* 배경색과 변환 효과 */
         }
 
-        // 대여소 위치 마커 (파란색)
-        addMarker(new naver.maps.LatLng(37.5665, 126.9780), 'blue', '서울 시청');
-        addMarker(new naver.maps.LatLng(37.57419968, 127.0065918), 'blue', '대여소 2');
+        /* 호버 효과 */
+        #filterButton:hover {
+            background-color: #45a049; /* 호버 시 배경색 */
+            transform: scale(1.05); /* 호버 시 약간 확대 */
+        }
 
-        // 문화시설 위치 마커 (빨간색)
-        addMarker(new naver.maps.LatLng(37.5796, 126.9770), 'red', '문화시설 1');
-      }
+        /* 클릭 효과 */
+        #filterButton:active {
+            background-color: #3e8e41; /* 클릭 시 배경색 */
+            transform: scale(0.95); /* 클릭 시 약간 축소 */
+        }
+
+        /* 포커스 효과 */
+        #filterButton:focus {
+            outline: none; /* 포커스 시 아웃라인 제거 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* 포커스 시 그림자 */
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style02.css' %}">
+
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=jpc0f2qdgk"></script>
+
+    <script>
+        var centerLat = {{ center.0 }};
+        var centerLng = {{ center.1 }};
+        var mapZoom = {{ zoom }};
+        var locationsData = '{{ locations|escapejs }}';
+        var culturalFacilitiesData = '{{ cultural_facilities|escapejs }}';
+        var region = "{{ region }}";
+
+        // Tooltip 기능 추가
+        function showTooltip() {
+            document.getElementById('tooltip').style.visibility = 'visible';
+            document.getElementById('tooltip').style.opacity = '1';
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').style.visibility = 'hidden';
+            document.getElementById('tooltip').style.opacity = '0';
+        }
+
     </script>
+
+    <script src="{% static 'js/map_script.js' %}"></script>
+    <script src="{% static 'js/stroke.js' %}"></script>
+    <script src="{% static 'js/find_route.js' %}"></script>
+
+
 </head>
-<body onload="initMap()">
-  <div id="map"></div>
-  <div id="info">
-    <h1>정보 창</h1>
-    <p>이곳에 추가적인 정보를 입력할 수 있습니다.</p>
-  </div>
+<body onload="initMap();">
+<div id="map"></div>
+<div id="info">
+
+
+    <a href="{% url 'main_view' %}" class="home-button"></a> <!-- 홈 버튼 추가 -->
+    <button class="help-button" onmouseover="showTooltip()" onmouseout="hideTooltip()"></button>
+    <div id="tooltip" class="tooltip">
+        <strong>이 웹사이트는 자전거 대여소와 문화시설을 추천해줍니다.</strong> <br><br><br>
+        1. 따릉이를 대여하고자 하는 대여소를 선택하세요. <br><br>
+        2. 방문하고 싶은 문화시설 종류를 두가지 선택하세요.<br><br>
+        3. 필터 적용 버튼을 눌러 코스를 확인하세요.<br><br>
+        4. 각 코스를 클릭하여 자세한 정보를 확인하세요.
+    </div>
+    <h1>{{ region }} 자전거 대여소</h1><hr style="border: none; border-bottom: 2px solid white; margin-top:-10px">
+    <p style="font-size: 20px;">방문하고 싶은 두 가지 유형의 문화시설을 선택하세요.</p>
+
+
+    <div id="filter-container">
+        <div>
+            <label for="categoryDropdown1">첫 번째 문화시설 </label>
+            <select id="categoryDropdown1">
+                <option value="공공도서관">공공도서관</option>
+                <option value="공연/연극/문화센터">공연/연극/문화센터</option>
+                <option value="공원">공원</option>
+                <option value="대형기념관/묘역">대형기념관/묘역</option>
+                <option value="드라마/영화촬영지">드라마/영화촬영지</option>
+                <option value="미술관">미술관</option>
+                <option value="박물관/전시">박물관/전시</option>
+                <option value="아쿠아리움/대형수족관">아쿠아리움/대형수족관</option>
+                <option value="액티비티">액티비티</option>
+                <option value="어린이놀이터">어린이놀이터</option>
+                <option value="역사 문화유산">역사 문화유산</option>
+                <option value="유명 거리">유명 거리</option>
+                <option value="일반극장/영화관">일반극장/영화관</option>
+                <option value="자연휴양지">자연휴양지</option>
+                <option value="테마공원/대형놀이공원">테마공원/대형놀이공원</option>
+            </select>
+        </div>
+        <div>
+            <label for="categoryDropdown2">두 번째 문화시설 </label>
+            <select id="categoryDropdown2">
+                <option value="공공도서관">공공도서관</option>
+                <option value="공연/연극/문화센터">공연/연극/문화센터</option>
+                <option value="공원">공원</option>
+                <option value="대형기념관/묘역">대형기념관/묘역</option>
+                <option value="드라마/영화촬영지">드라마/영화촬영지</option>
+                <option value="미술관">미술관</option>
+                <option value="박물관/전시">박물관/전시</option>
+                <option value="아쿠아리움/대형수족관">아쿠아리움/대형수족관</option>
+                <option value="액티비티">액티비티</option>
+                <option value="어린이놀이터">어린이놀이터</option>
+                <option value="역사 문화유산">역사 문화유산</option>
+                <option value="유명 거리">유명 거리</option>
+                <option value="일반극장/영화관">일반극장/영화관</option>
+                <option value="자연휴양지">자연휴양지</option>
+                <option value="테마공원/대형놀이공원">테마공원/대형놀이공원</option>
+            </select>
+        </div>
+    </div>
+    <p id="selectedRentalStation" style="font-size:20px">선택한 대여소: 없음</p>
+    <button id="filterButton">필터 적용</button>
+    <div id="courses">
+        <!-- 필터링된 결과가 표시될 영역 -->
+    </div>
+    <div id="results"></div>
+
+</div>
+
+<script src="{% static 'js/algo.js' %}"></script>
+
 </body>
 </html>

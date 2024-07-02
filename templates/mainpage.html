@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>따릉이 패스파인더</title>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mainpage.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="icon">
+            <img src="{% static 'images/icon_08.png' %}" alt="Icon">
+        </div>
+        <ul class="region-list">
+            <li><a href="{% url 'map_view' '종로구' %}" class="region" id="jongro">종로구</a></li>
+            <li><a href="{% url 'map_view' '송파구' %}" class="region" id="songpa">송파구</a></li>
+            <li><a href="{% url 'map_view' '용산구' %}" class="region" id="yongsan">용산구</a></li>
+            <li><a href="{% url 'map_view' '중구' %}" class="region" id="jung">중구</a></li>
+            <li><a href="{% url 'map_view' '강남구' %}" class="region" id="gangnam">강남구</a></li>
+        </ul>
+    </div>
+</body>
+</html>

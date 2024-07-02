@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rental",
+    "route",
 
 ]
 
@@ -65,7 +66,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -126,8 +127,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
-
+STATIC_URL = '/static/'
+# 정적 파일을 관리할 디렉토리 경로 설정
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+# collectstatic 명령을 사용할 때 정적 파일이 모이는 디렉토리 경로 설정
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

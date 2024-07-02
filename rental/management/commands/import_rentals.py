@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # CSV 파일 경로
-        bikecsv_path = "/Users/foxrainswap/Desktop/아시아경제/1차프로젝트/데이터/따릉이대여소/rental.csv"
+        bikecsv_path = "/Users/foxrainswap/Desktop/아시아경제/1차프로젝트/데이터/따릉이대여소/rental_stations.csv"
 
         # CSV 파일 읽기
         df = pd.read_csv(bikecsv_path)
@@ -16,6 +16,7 @@ class Command(BaseCommand):
         for index, row in df.iterrows():
             RentalStation.objects.create(
                 name=row['name'],
+                loc=row['loc'],
                 latitude=row['latitude'],
                 longitude=row['longitude']
             )
