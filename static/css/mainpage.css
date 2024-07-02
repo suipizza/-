@@ -5,7 +5,7 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #FF99CC;
+    background-color: #FFBB70;
 }
 
 .container {
@@ -58,6 +58,23 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 20px;
+    transition: background-color 0.3s, transform 0.3s; /* 배경색과 변환 효과 */
+
+}
+/* 호버 효과 */
+.region:hover {
+    transform: scale(1.05); /* 호버 시 약간 확대 */
+}
+
+/* 클릭 효과 */
+.region:active {
+    transform: scale(0.95); /* 클릭 시 약간 축소 */
+}
+
+/* 포커스 효과 */
+.region:focus {
+    outline: none; /* 포커스 시 아웃라인 제거 */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* 포커스 시 그림자 */
 }
 
 #jongro {
@@ -73,5 +90,5 @@ body {
         background-color: #B7B597;
 }
 #gangnam {
-        background-color: #993399;
+        background-color: #FA7070;
 }
