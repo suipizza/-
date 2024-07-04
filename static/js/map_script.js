@@ -119,10 +119,7 @@ function initMap() {
   var bikeEmoji = "🅿️";
   var facEmoji = "✅";
 
-  // 예시 대여소 위치 마커
-  addMarker(new naver.maps.LatLng(37.5665, 126.9780), bikeEmoji, '서울 시청');
-  addMarker(new naver.maps.LatLng(37.57419968, 127.0065918), bikeEmoji, '대여소 2');
-  addMarker(new naver.maps.LatLng(37.5796, 126.9770), bikeEmoji, '문화시설 1');
+
 
 
   // Django에서 전달된 JSON 데이터를 사용하여 마커 추가

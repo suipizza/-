@@ -21,9 +21,13 @@
           background-color: #AFC8AD; /* 배경색 설정 */
           padding: 30px;
           box-sizing: border-box; /* 패딩 포함 크기 설정 */
+          overflow-y: auto; /* 세로 스크롤 추가 */
+
         }
          body {
           margin: 0; /* 전체 페이지 마진 제거 */
+          background-color: #AFC8AD; /* 전체 페이지 배경색 설정 */
+
         }
           .home-button, .help-button {
           position: absolute;
@@ -147,7 +151,7 @@
 
     <div id="filter-container">
         <div>
-            <label for="categoryDropdown1">첫 번째 문화시설 </label>
+            <label for="categoryDropdown1"><strong>첫 번째 문화시설 </strong></label>
             <select id="categoryDropdown1">
                 <option value="공공도서관">공공도서관</option>
                 <option value="공연/연극/문화센터">공연/연극/문화센터</option>
@@ -167,7 +171,7 @@
             </select>
         </div>
         <div>
-            <label for="categoryDropdown2">두 번째 문화시설 </label>
+            <label for="categoryDropdown2"><strong>두 번째 문화시설 </strong></label>
             <select id="categoryDropdown2">
                 <option value="공공도서관">공공도서관</option>
                 <option value="공연/연극/문화센터">공연/연극/문화센터</option>

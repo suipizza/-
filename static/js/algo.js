@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         let distanceFacility1toFacility2 = calculateDistance(facility1.latitude, facility1.longitude, bestFacilities2[index].latitude, bestFacilities2[index].longitude).toFixed(2);
 
                         courseDiv.innerHTML = `
-                            <h3>코스 ${String.fromCharCode(65 + index)}</h3>
+                            <h3>🔽 코스 ${String.fromCharCode(65 + index)}</h3>
                             <div class="details" style="display: none;">
                                 <p><strong><u>사용자가 선택한 대여소:</u></strong> ${selectedRentalStation.name}</p>
                                 <p><strong><u>반납할 대여소:</u></strong> ${closestRentalStations[index].closestRental.name} (${distanceAtoB} km)</p>

@@ -10,16 +10,16 @@ function drawCourseLines(selectedRentalStation, closestRentalStation, facility1,
     // 바깥 선 스타일
     var outerLineStyles = [
         {color: '#E88D67', thickness: 5},
-        {color: '#FFDB5C', thickness: 5, dashArray: [3, 3]},
-        {color: '#C3FF93', thickness: 5, dashArray: [1, 1]}
+        {color: '#8DDFCB', thickness: 5, dashArray: [3, 3]},
+        {color: '#FFAD84', thickness: 5, dashArray: [1, 1]}
     ];
 
 
     // 선 스타일
     var lineStyles = [
         {color: '#FF70AB', thickness: 6},
-        {color: '#FFAF61', thickness: 6, dashArray: [3, 3]},
-        {color: '#007F73', thickness: 6, dashArray: [1, 1]}
+        {color: '#0802A3', thickness: 6, dashArray: [2, 2]},
+        {color: '#DF826C', thickness: 6, dashArray: [1, 1]}
     ];
 
 
